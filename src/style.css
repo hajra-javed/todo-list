@@ -1,0 +1,166 @@
+:root {
+    --field-background: #add8e6;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    border-color: aliceblue;
+}
+
+header {
+    padding: 10px;
+    font-family: system-ui;
+    background-color: teal;
+    font-size: 3rem;
+    color: white;
+}
+
+main {
+    display: flex;
+    flex: 1;
+}
+
+.projects {
+    background-color: #95c5ff;
+    flex-basis: 20%;
+}
+
+.projects>.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.new-project {
+    margin: 1em;
+    height: 3em;
+    width: 3em;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    /* margin: 1em; */
+    margin-right: 16px;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 1em;
+}
+
+li {
+    align-items: center;
+    width: 100%;
+    /* padding-left: 1em; */
+    height: 2em;
+    box-sizing: content-box;
+    display: flex;
+    background-color: #ffffb6;
+}
+
+li>input {
+    background-color: transparent;
+    padding: 0;
+    height: 100%;
+    border: none;
+    width: 100%;
+    margin: 0;
+}
+
+
+li > input:focus-visible{
+    outline-style: solid;
+    outline-width: 2px;
+}
+
+li>input,
+li>div {
+    font-family: 'Courier New', Courier, monospace;
+    padding-left: 1em;
+}
+
+li>div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.todos{
+    flex: 1;
+}
+
+.todos > .top{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+form {
+    flex: 1;
+    display: none;
+}
+
+legend {
+    margin: 1em;
+    font-size: 2em;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+    gap: 1em;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    background-color: var(--field-background);
+    border: solid 2px var(--field-background);
+    height: 4em;
+}
+
+label {
+    font-family: monospace;
+    font-size: 1.5em;
+}
+
+div>input,
+div>select {
+    border: none;
+    height: 2em;
+    width: 100%;
+    border: none;
+    padding: 0;
+    background-color: floralwhite;
+    margin: 0;
+}
+
+/* li > input{
+    padding: 1em;
+} */
+
+#due-date,
+#priority {
+    text-align: center;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+}
+
+form button {
+    width: 6rem;
+    height: 3rem;
+    /* back */
+}
+
+h4 {
+    margin-left: 1em;
+}
