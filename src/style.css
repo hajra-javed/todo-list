@@ -33,6 +33,10 @@ main {
     align-items: center;
 }
 
+.projects ul li:hover{
+    cursor: pointer;
+}
+
 .new-project {
     margin: 1em;
     height: 3em;
@@ -96,6 +100,10 @@ li>div {
     justify-content: space-between;
 }
 
+img.details:hover{
+    cursor: pointer;
+}
+
 
 form {
     flex: 1;
@@ -107,7 +115,7 @@ legend {
     font-size: 2em;
 }
 
-.details {
+.form {
     display: flex;
     flex-direction: column;
     margin: 2rem;

@@ -1,23 +1,22 @@
 class Projects{
     static projects = [];
-    static selected = null;
+    static currentProjectIndex = -1;
     static createProject = (name) => {
         const project = new Project(name);
-        this.projects.push(project);
+        this.projects.unshift(project);
     };
-    static getIndex(name){
-        return this.projects.findIndex(p => p.name === name);
-    }
 };
 
 class Project{
     constructor(name){
         this.name = name;
         this.tasks = [];
+        this.currentTaskIndex = null;
     };
 
     addTask(task){
-        this.tasks.push(task);
+        this.tasks.unshift(task);
+        // this.currentTaskIndex = null;
     };
     
 };
