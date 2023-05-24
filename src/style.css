@@ -99,6 +99,9 @@ li>div {
     display: flex;
     justify-content: space-between;
 }
+li > .checked{
+    width: auto;
+}
 
 img.details:hover{
     cursor: pointer;

@@ -1,5 +1,6 @@
 import { Projects, Task } from './Todo';
 import details from './details.png';
+import del from './delete.png';
 import { format } from 'date-fns';
 
 class UI {
@@ -76,7 +77,7 @@ class UI {
                 li.addEventListener('click', () => {
                     const projectList = document.querySelectorAll('.projects > ul > li');
                     projectList.forEach((val, index) => {
-                        if (val === li){
+                        if (val === li) {
                             Projects.currentProjectIndex = index;
                             // console.log(Projects.currentProjectIndex);
                         };
@@ -84,7 +85,7 @@ class UI {
                     // Projects.currentProjectIndex;
                     UI.displayTasks();
                 });
-        
+
             } else {
                 ul.removeChild(li);
             };
@@ -123,17 +124,30 @@ class UI {
             const t = tasks[i];
             const taskTitle = UI.createElement('div', { classNames: ['title'], textContent: t.title });
             const taskDueDate = UI.createElement('div', { classNames: ['due-date'], textContent: t.dueDate });
+            const taskChecked = UI.createElement('input', { classNames: ['checked'], type: 'checkbox' });
+            taskChecked.checked = t.checked;
             const detailsIcon = UI.createElement('img', { classNames: ['details'] });
             detailsIcon.src = details;
+            const deleteIcon = UI.createElement('img', { classNames: ['delete'] });
+            deleteIcon.src = del;
             const taskItem = UI.createElement('li', {
-                classNames: ['task'], children: [taskTitle, taskDueDate, detailsIcon]
+                classNames: ['task'], children: [taskTitle, taskDueDate, taskChecked, detailsIcon, deleteIcon]
             });
             newList.appendChild(taskItem);
+
+            taskChecked.addEventListener('click', () => {
+                const checkedList = document.querySelectorAll('.checked');
+                checkedList.forEach((val, index) => {
+                    if (val === taskChecked) {
+                        Projects.projects[projectIndex].tasks[index].checked = !(Projects.projects[projectIndex].tasks[index].checked);
+                    };
+                });
+            });
 
             detailsIcon.addEventListener('click', () => {
                 const detailsList = document.querySelectorAll('.details');
                 detailsList.forEach((val, index) => {
-                    if (val === detailsIcon){
+                    if (val === detailsIcon) {
                         Projects.projects[projectIndex].currentTaskIndex = index;
                         console.log(Projects.projects[projectIndex].currentTaskIndex);
                     };
@@ -151,6 +165,16 @@ class UI {
                 notes.value = t.notes;
                 this.switchMain();
 
+            });
+
+            deleteIcon.addEventListener('click', () => {
+                const deleteList = document.querySelectorAll('.delete');
+                deleteList.forEach((val, index) => {
+                    if (val === deleteIcon) {
+                        Projects.projects[projectIndex].tasks.splice(index, 1);
+                        this.displayTasks();
+                    };
+                });
             });
         };
         this.replaceElement(newList, oldList);

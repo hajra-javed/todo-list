@@ -28,6 +28,7 @@ class Task{
         this.dueDate = dueDate;
         this.priority = priority;
         this.notes = notes;
+        this.checked = false;
     };
 };
 
