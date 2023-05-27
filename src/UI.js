@@ -62,6 +62,10 @@ class UI {
         function createProject() {
             const value = input.value;
             if (value !== '') {
+
+                document.querySelector('.new-task').style.display = 'initial';
+                document.querySelector('.headings').style.display = 'flex';
+
                 const project = UI.createElement('div', { textContent: value });
                 UI.replaceElement(project, input);
                 project.style.fontWeight = 'bold';
@@ -111,7 +115,7 @@ class UI {
 
     };
 
-    static populateProjects(){
+    static populateProjects() {
         const ul = document.querySelector('ul');
         Projects.projects.forEach(p => {
             const project = UI.createElement('div', { textContent: p.name });
@@ -130,14 +134,14 @@ class UI {
                 });
                 UI.displayTasks();
             });
-            
+
             this.displayTasks();
         });
     };
 
     static displayTasks() {
         const projectIndex = Projects.currentProjectIndex;
-        if (projectIndex === null){
+        if (projectIndex === null) {
             return;
         }
 
@@ -151,15 +155,28 @@ class UI {
             const t = tasks[i];
             const taskTitle = UI.createElement('div', { classNames: ['title'], textContent: t.title });
             const taskDueDate = UI.createElement('div', { classNames: ['due-date'], textContent: t.dueDate });
+
+            const left = this.createElement('div', { classNames: ['left'], children: [taskTitle, taskDueDate] });
+
             const taskChecked = UI.createElement('input', { classNames: ['checked'], type: 'checkbox' });
             taskChecked.checked = t.checked;
             const detailsIcon = UI.createElement('img', { classNames: ['details'] });
             detailsIcon.src = details;
             const deleteIcon = UI.createElement('img', { classNames: ['delete'] });
             deleteIcon.src = del;
+
+            const right = this.createElement('div', { classNames: ['right'], children: [taskChecked, detailsIcon, deleteIcon] });
+
             const taskItem = UI.createElement('li', {
-                classNames: ['task'], children: [taskTitle, taskDueDate, taskChecked, detailsIcon, deleteIcon]
+                classNames: ['task'], children: [left, right]
             });
+
+            if (t.priority === 'low'){
+                taskItem.style.backgroundColor = '#efefef'
+            } else if (t.priority === 'high'){
+                taskItem.style.backgroundColor = '#ff9191'
+            };
+
             newList.appendChild(taskItem);
 
             taskChecked.addEventListener('click', () => {

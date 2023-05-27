@@ -9,6 +9,11 @@ if (localStorage.currentProjectIndex !== undefined){
 
 if (localStorage.projects !== undefined){
     const projects = JSON.parse(localStorage.projects);
+    if (projects.length !== 0){
+
+        document.querySelector('.new-task').style.display = 'initial';
+        document.querySelector('.headings').style.display = 'flex';
+    }
     projects.reverse().forEach((p, i) => {
         const project = new Project(p.name, [], p.currentTaskIndex);
         p.tasks.reverse().forEach((t, j) => {

@@ -1,20 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,400;1,500&display=swap');
+
 :root {
     --field-background: #add8e6;
 }
 
 body {
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
     height: 100vh;
     border-color: aliceblue;
+    box-sizing: ;
 }
 
 header {
+    border-width: medium;
+    text-shadow: 2px 2px 2px deeppink;
+    /* -webkit-text-stroke-width: 1px; */
+    /* -webkit-text-stroke-color: black; */
     padding: 10px;
-    font-family: system-ui;
-    background-color: teal;
-    font-size: 3rem;
+    font-family: 'Montserrat', sans-serif;
+    background-color: powderblue;
+    font-size: 4rem;
     color: white;
+    /* margin-bottom: 10px; */
+    border-style: outset;
 }
 
 main {
@@ -23,7 +35,7 @@ main {
 }
 
 .projects {
-    background-color: #95c5ff;
+    background-color: pink;
     flex-basis: 20%;
 }
 
@@ -38,9 +50,14 @@ main {
 }
 
 .new-project {
-    margin: 1em;
-    height: 3em;
-    width: 3em;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin-right: 0.5em;
+    height: 1.5em;
+    width: 1.5em;
+    display: flex;
+    font-size: 2rem;
 }
 
 ul {
@@ -61,7 +78,7 @@ li {
     height: 2em;
     box-sizing: content-box;
     display: flex;
-    background-color: #ffffb6;
+    background-color: antiquewhite;
 }
 
 li>input {
@@ -93,13 +110,66 @@ li>div {
 
 .todos{
     flex: 1;
+    margin: 2em;
 }
 
 .todos > .top{
     display: flex;
     justify-content: space-between;
 }
-li > .checked{
+
+button.new-task {
+    margin: 1em;
+    height: 3em;
+    width: 8em;
+    display: none;
+}
+
+.headings{
+    width: 100%;
+    display: flex;
+    padding: 0.5em 0;
+    /* justify-content: center; */
+    gap: 46em;
+    background-color: slategrey;
+    display: none;
+
+}
+
+.title {
+    margin-left: 1em;
+}
+
+.headings > *{
+    color: white;
+    font-size: 25px;
+    font-weight: 500;
+    font-family: 'Jost', sans-serif;
+}
+
+
+
+li.task {
+    display: flex;
+    background-color: #d1f1fd;
+    justify-content: space-between;
+    gap: 2em;
+}
+
+.task > .left{
+    display: flex;
+    flex: 1;
+    gap: 2em;
+    justify-content: space-between;
+}
+
+.task > .right{
+    display: flex;
+    align-items:  center;
+    gap: 1em;
+}
+
+li .checked{
     width: auto;
 }
 
@@ -172,6 +242,7 @@ form button {
     /* back */
 }
 
-h4 {
+h2 {
     margin-left: 1em;
+    font-family: 'Jost', sans-serif;;
 }
