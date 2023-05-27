@@ -1,7 +1,6 @@
 import { Projects, Task } from './Todo';
 import details from './details.png';
 import del from './delete.png';
-import { format } from 'date-fns';
 
 class UI {
 
@@ -42,12 +41,11 @@ class UI {
         parent.replaceChild(newEl, oldEl);
     };
 
-    static newProject(createProject) {
+    static newProject() {
         const ul = document.querySelector('ul');
         const input = this.createElement('input', { type: 'text', placeholder: 'Enter project name', required: true });
         input.maxLength = 26;
         const li = this.createElement('li', { children: [input] });
-        // li.style.backgroundColor = 'paleturquoise';
         ul.insertBefore(li, ul.firstChild);
         input.focus();
 
@@ -58,7 +56,6 @@ class UI {
         input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 createProject();
-                // console.log(Projects.projects);
             }
         });
 
@@ -71,18 +68,18 @@ class UI {
                 li.style.boxShadow = '4px 5px 0px 0px black';
                 Projects.createProject(value);
 
-                UI.displayProject(value);
                 Projects.currentProjectIndex = 0;
-                console.log(Projects.currentProjectIndex);
+                UI.displayProject();
+                localStorage.projects = JSON.stringify(Projects.projects);
+                localStorage.currentProjectIndex = 0;
                 li.addEventListener('click', () => {
                     const projectList = document.querySelectorAll('.projects > ul > li');
                     projectList.forEach((val, index) => {
                         if (val === li) {
                             Projects.currentProjectIndex = index;
-                            // console.log(Projects.currentProjectIndex);
+                            localStorage.currentProjectIndex = index;
                         };
                     });
-                    // Projects.currentProjectIndex;
                     UI.displayTasks();
                 });
 
@@ -92,7 +89,8 @@ class UI {
         };
     };
 
-    static displayProject(name) {
+    static displayProject() {
+        const name = Projects.projects[Projects.currentProjectIndex].name;
         const todosHeading = document.querySelector('.todos > .top > h2');
         const legend = document.querySelector('legend');
         todosHeading.textContent = name;
@@ -113,8 +111,37 @@ class UI {
 
     };
 
+    static populateProjects(){
+        const ul = document.querySelector('ul');
+        Projects.projects.forEach(p => {
+            const project = UI.createElement('div', { textContent: p.name });
+            project.style.fontWeight = 'bold';
+            const li = this.createElement('li', { children: [project] });
+            li.style.boxShadow = '4px 5px 0px 0px black';
+            ul.appendChild(li);
+
+            li.addEventListener('click', () => {
+                const projectList = document.querySelectorAll('.projects > ul > li');
+                projectList.forEach((val, index) => {
+                    if (val === li) {
+                        Projects.currentProjectIndex = index;
+                        localStorage.currentProjectIndex = index;
+                    };
+                });
+                UI.displayTasks();
+            });
+            
+            this.displayTasks();
+        });
+    };
+
     static displayTasks() {
         const projectIndex = Projects.currentProjectIndex;
+        if (projectIndex === null){
+            return;
+        }
+
+        this.displayProject();
         const tasks = Projects.projects[projectIndex].tasks;
 
         const oldList = document.querySelector('.todos > ul');
@@ -140,6 +167,7 @@ class UI {
                 checkedList.forEach((val, index) => {
                     if (val === taskChecked) {
                         Projects.projects[projectIndex].tasks[index].checked = !(Projects.projects[projectIndex].tasks[index].checked);
+                        localStorage.projects = JSON.stringify(Projects.projects);
                     };
                 });
             });
@@ -149,7 +177,6 @@ class UI {
                 detailsList.forEach((val, index) => {
                     if (val === detailsIcon) {
                         Projects.projects[projectIndex].currentTaskIndex = index;
-                        console.log(Projects.projects[projectIndex].currentTaskIndex);
                     };
                 });
 
@@ -172,6 +199,7 @@ class UI {
                 deleteList.forEach((val, index) => {
                     if (val === deleteIcon) {
                         Projects.projects[projectIndex].tasks.splice(index, 1);
+                        localStorage.projects = JSON.stringify(Projects.projects);
                         this.displayTasks();
                     };
                 });
