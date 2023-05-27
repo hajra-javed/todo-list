@@ -105,7 +105,7 @@ li>div {
 li>div {
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    /* white-space: nowrap; */
 }
 
 .todos{
@@ -130,7 +130,7 @@ button.new-task {
     display: flex;
     padding: 0.5em 0;
     /* justify-content: center; */
-    gap: 46em;
+    gap: 48em;
     background-color: slategrey;
     display: none;
 
@@ -245,4 +245,8 @@ form button {
 h2 {
     margin-left: 1em;
     font-family: 'Jost', sans-serif;;
+}
+
+img{
+    height: 2em;
 }
