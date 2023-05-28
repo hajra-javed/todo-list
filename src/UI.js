@@ -44,7 +44,7 @@ class UI {
     static newProject() {
         const ul = document.querySelector('ul');
         const input = this.createElement('input', { type: 'text', placeholder: 'Enter project name', required: true });
-        input.maxLength = 26;
+        input.maxLength = 50;
         const li = this.createElement('li', { children: [input] });
         ul.insertBefore(li, ul.firstChild);
         input.focus();
@@ -66,17 +66,40 @@ class UI {
                 document.querySelector('.new-task').style.display = 'initial';
                 document.querySelector('.headings').style.display = 'flex';
 
-                const project = UI.createElement('div', { textContent: value });
+                const projectName = UI.createElement('div', { textContent: value });
+                projectName.style.fontWeight = 'bold';
+                const deleteIcon = UI.createElement('img', { classNames: ['delete'] });
+                deleteIcon.src = del;
+                const project = UI.createElement('div', { children: [projectName, deleteIcon] });
                 UI.replaceElement(project, input);
-                project.style.fontWeight = 'bold';
                 li.style.boxShadow = '4px 5px 0px 0px black';
                 Projects.createProject(value);
+
+                deleteIcon.addEventListener('click', () => {
+                    const deleteList = document.querySelectorAll('.projects .delete');
+                    deleteList.forEach((val, index) => {
+                        if (val === deleteIcon) {
+                            Projects.projects.splice(index, 1);
+                            UI.populateProjects()
+                            localStorage.projects = JSON.stringify(Projects.projects);
+                            if (Projects.projects.length !== 0){
+                                Projects.currentProjectIndex = 0;
+                                localStorage.currentProjectIndex = JSON.stringify(0);
+                                this.displayTasks();
+                            } else {
+                                document.querySelector('.todos h2').textContent = 'Add your first project';
+                                document.querySelector('.new-task').style.display = 'none';
+                                document.querySelector('.headings').style.display = 'none';
+                            }
+                        };
+                    });
+                });
 
                 Projects.currentProjectIndex = 0;
                 UI.displayProject();
                 localStorage.projects = JSON.stringify(Projects.projects);
                 localStorage.currentProjectIndex = 0;
-                li.addEventListener('click', () => {
+                projectName.addEventListener('click', () => {
                     const projectList = document.querySelectorAll('.projects > ul > li');
                     projectList.forEach((val, index) => {
                         if (val === li) {
@@ -116,15 +139,39 @@ class UI {
     };
 
     static populateProjects() {
-        const ul = document.querySelector('ul');
+        // const ul = document.querySelector('ul');
+        const ul = this.createElement('ul');
         Projects.projects.forEach(p => {
-            const project = UI.createElement('div', { textContent: p.name });
-            project.style.fontWeight = 'bold';
+            const projectName = UI.createElement('div', { textContent: p.name });
+            projectName.style.fontWeight = 'bold';
+            const deleteIcon = UI.createElement('img', { classNames: ['delete'] });
+            deleteIcon.src = del;
+            const project = UI.createElement('div', { children: [projectName, deleteIcon] });
             const li = this.createElement('li', { children: [project] });
             li.style.boxShadow = '4px 5px 0px 0px black';
             ul.appendChild(li);
 
-            li.addEventListener('click', () => {
+            deleteIcon.addEventListener('click', () => {
+                const deleteList = document.querySelectorAll('.projects .delete');
+                deleteList.forEach((val, index) => {
+                    if (val === deleteIcon) {
+                        Projects.projects.splice(index, 1);
+                        this.populateProjects();
+                        localStorage.projects = JSON.stringify(Projects.projects);
+                        if (Projects.projects.length !== 0){
+                            Projects.currentProjectIndex = 0;
+                            localStorage.currentProjectIndex = JSON.stringify(0);
+                            this.displayTasks();
+                        } else {
+                            document.querySelector('.todos h2').textContent = 'Add your first project';
+                            document.querySelector('.new-task').style.display = 'none';
+                            document.querySelector('.headings').style.display = 'none';
+                        }
+                    };
+                });
+            });
+
+            projectName.addEventListener('click', () => {
                 const projectList = document.querySelectorAll('.projects > ul > li');
                 projectList.forEach((val, index) => {
                     if (val === li) {
@@ -137,6 +184,7 @@ class UI {
 
             this.displayTasks();
         });
+        this.replaceElement(ul, document.querySelector('.projects ul'));
     };
 
     static displayTasks() {
@@ -212,7 +260,7 @@ class UI {
             });
 
             deleteIcon.addEventListener('click', () => {
-                const deleteList = document.querySelectorAll('.delete');
+                const deleteList = document.querySelectorAll('.todos .delete');
                 deleteList.forEach((val, index) => {
                     if (val === deleteIcon) {
                         Projects.projects[projectIndex].tasks.splice(index, 1);

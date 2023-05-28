@@ -45,7 +45,7 @@ main {
     align-items: center;
 }
 
-.projects ul li:hover{
+.projects li>div>div:hover{
     cursor: pointer;
 }
 
@@ -102,10 +102,23 @@ li>div {
     padding-left: 1em;
 }
 
-li>div {
-    overflow: hidden;
-    text-overflow: ellipsis;
+.projects li>div {
+    white-space: normal;
+    /* text-overflow: ellipsis; */
+    /* overflow: hidden; */
     /* white-space: nowrap; */
+    align-items: center;
+    width: 16em;
+    gap: 1em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.projects li>div>div {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    flex: 1;
 }
 
 .todos{
@@ -173,7 +186,7 @@ li .checked{
     width: auto;
 }
 
-img.details:hover{
+img:hover{
     cursor: pointer;
 }
 
